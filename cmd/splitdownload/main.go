@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"time"
@@ -17,6 +18,11 @@ func main() {
 
 // Run はmainパッケージのexecute関数
 func Run(args []string) int {
+
+	// コマンドライン引数からダウンロードファイルのURLを取得
+	flag.Parse()
+	argURL := flag.Arg(0)
+	fmt.Println(argURL)
 
 	client := &http.Client{Timeout: time.Duration(10) * time.Second}
 

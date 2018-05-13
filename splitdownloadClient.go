@@ -1,14 +1,24 @@
-// import (
-// 	"flag"
-// )
+package splitdownload
 
-// func parseFlag(args []string) {
+import (
+	"log"
+	"net/http"
+	"net/url"
+)
 
-// 	flg := flag.NewFlagSet(args[0], flag.ExitOnError)
+// Downloader は構造体定義
+type Downloader struct {
+	URL        *url.URL
+	HTTPClient *http.Client
 
-// 	*flg.String("t", "./", "Message")
-// 	*flg.String("s", "jpg", "Message")
-// 	*flg.String("d", "png", "Message")
+	Logger *log.Logger
+}
 
-// 	flg.Parse(args)
-// }
+// NewDownloader はクライアント生成メソッド
+func NewDownloader() *Downloader {
+
+	// todo
+	return &Downloader{}
+
+}
+

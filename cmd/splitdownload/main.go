@@ -9,6 +9,9 @@ import (
 
 	"net/http"
 	"net/url"
+
+	// 自作パッケージ
+	"github.com/yoichi-watanabe/splitdownload"
 )
 
 // エンドポイント
@@ -22,8 +25,12 @@ func Run(args []string) int {
 	// コマンドライン引数からダウンロードファイルのURLを取得
 	flag.Parse()
 	argURL := flag.Arg(0)
-	fmt.Println(argURL)
 
+	downloader := splitdownload.NewDownloader()
+	downloader.URL = argURL
+
+
+	//todo 以下処理をdownloaderに委譲
 	client := &http.Client{Timeout: time.Duration(10) * time.Second}
 
 	// クエリを組み立て
@@ -31,7 +38,7 @@ func Run(args []string) int {
 	values.Add("key", "value")
 
 	// Request を生成
-	req, err := http.NewRequest("GET", "[アクセス先URL]", nil)
+	req, err := http.NewRequest("GET", argURL, nil)
 	if err != nil {
 		fmt.Println(err)
 		return 1
@@ -50,6 +57,9 @@ func Run(args []string) int {
 
 	// 関数を抜ける際に必ずresponseをcloseするようにdeferでcloseを呼ぶ
 	defer resp.Body.Close()
+
+	// dubug用
+	fmt.Println(req)
 
 	return 0
 }
